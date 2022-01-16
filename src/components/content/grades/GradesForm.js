@@ -5,6 +5,7 @@ import {Button, Grid, TextField} from "@material-ui/core";
 import {useState} from "react";
 import axios from "axios";
 import data from "bootstrap/js/src/dom/data";
+import instance from "../../../axios/axios";
 
 // Model / encja pustej oferty/nowego obiektu
 const EMPTY_NEW_GRADE = {
@@ -30,7 +31,7 @@ const GradesForm = () => {
         // wysyłanie obiektu na serwer
         console.log("Wysyłamy:" + JSON.stringify(editedGrades))
 
-        axios.post('http://localhost:8080/api/grades', editedGrades)
+        instance.post('/api/grades', editedGrades)
             .then((data) => {
                 console.log("Odpowiedz sukces: " + JSON.stringify(data));
             })

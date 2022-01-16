@@ -1,6 +1,6 @@
 import CardComponent from "../../CardComponent";
 
-const ContentHome = () => {
+const AppContentHome = () => {
     return (
         <div>
             <CardComponent title={'Home'}>
@@ -10,4 +10,4 @@ const ContentHome = () => {
     )
 }
 
-export default ContentHome;
+export default AppContentHome;

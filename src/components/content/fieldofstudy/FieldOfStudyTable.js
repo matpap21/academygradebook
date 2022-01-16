@@ -2,11 +2,12 @@ import classes from "./FieldOfStudyList.module.css";
 import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import CardComponent from "../../CardComponent";
 import axios from "axios";
+import instance from "../../../axios/axios";
 
 const FieldOfStudyTable = (props) => {
 
     const handleRemoveRecord = (row) => {
-        axios.delete("http://localhost:8080/api/fieldsofstudy/" + row.id)
+        instance.delete("/api/fieldsofstudy/" + row.id)
             .then((data) => {
                 console.log("Otrzymaliśmy sukces odpowiedź!");
                 props.refreshData();

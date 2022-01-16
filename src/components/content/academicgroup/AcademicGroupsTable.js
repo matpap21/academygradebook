@@ -2,11 +2,12 @@ import classes from "./AcademicGroupsList.module.css";
 import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import CardComponent from "../../CardComponent";
 import axios from "axios";
+import instance from "../../../axios/axios";
 
 const AcademicGroupsTable = (props) => {
 
     const handleRemoveRecord = (row) => {
-        axios.delete("http://localhost:8080/api/academicgroups/" + row.id)
+        instance.delete("/api/academicgroups/" + row.id)
             .then((data) => {
                 console.log("Otrzymaliśmy sukces odpowiedź!");
                 props.refreshData();
@@ -25,6 +26,7 @@ const AcademicGroupsTable = (props) => {
                             <TableCell>Id</TableCell>
                             <TableCell align="right">Group Name</TableCell>
                             <TableCell align="right">Start Date</TableCell>
+                            <TableCell align="right">Field Of Study</TableCell>
                             <TableCell align="right"/>
                             <TableCell align="right"/>
                             <TableCell align="right"/>
@@ -55,6 +57,7 @@ const AcademicGroupsTable = (props) => {
                                 <TableCell component="th" scope="row">{row.id}</TableCell>
                                 <TableCell align="right">{row.academicGroup}</TableCell>
                                 <TableCell align="right">{row.startDate}</TableCell>
+                                <TableCell align="right">{row.fieldOfStudy}</TableCell>
                                 <TableCell align="right">
                                     {
                                         props.hideDelete ? (<></>) : <Button onClick={() => {

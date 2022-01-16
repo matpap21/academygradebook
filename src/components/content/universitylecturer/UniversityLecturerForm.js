@@ -4,6 +4,7 @@ import classes from './UniversityLecturer.module.css'
 import CardComponent from "../../CardComponent";
 import DeleteIcon from '@material-ui/icons/Delete';
 import {Button, Grid, MenuItem, TextField} from "@material-ui/core";
+import instance from "../../../axios/axios";
 
 const EMPTY_NEW_UNIVERSITY_LECTURER =  {
     'id': null,
@@ -29,7 +30,7 @@ const UniversityLecturerForm = () => {
         // wysłanie obiektu na serwer
         console.log("Wysyłamy:" + JSON.stringify(editedUniversityLecturers))
 
-        axios.post('http://localhost:8080/api/universitylecturers', editedUniversityLecturers)
+        instance.post('/api/universitylecturers', editedUniversityLecturers)
             .then((data) => {
                 console.log("Success: " + JSON.stringify(data));
             })

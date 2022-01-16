@@ -3,11 +3,12 @@ import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, T
 import CardComponent from "../../CardComponent";
 import axios from "axios";
 import UniversityLecturersList from "./UniversityLecturersList";
+import instance from "../../../axios/axios";
 
 const UniversityLecturersTable = (props) => {
 
     const handleRemoveRecord = (row) => {
-        axios.delete("http://localhost:8080/api/universitylecturers" + row.id)
+        instance.delete("/api/universitylecturers" + row.id)
             .then((data) => {
                 console.log("Otrzymaliśmy sukces odpowiedź!");
                 props.refreshData();

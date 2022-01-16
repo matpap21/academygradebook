@@ -5,12 +5,14 @@ import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, T
 import {useEffect, useState} from "react";
 import axios from "axios";
 import AcademicSubjectsTable from "./AcademicSubjectsTable";
+import UniversityLecturersTable from "../universitylecturer/UniversityLecturersTable";
+import instance from "../../../axios/axios";
 
 const AcademicSubjectsList = () => {
     const [rows, setRows] = useState([]);
 
     const pullRecordsFromDatabaseServer = () => {
-        axios.get("http://localhost:8080/api/academicsubjects")
+        instance.get("/api/academicsubjects")
             .then((data) => {
                 // data ma pole data
                 console.log("Otrzymaliśmy sukces odpowiedź!")
@@ -20,6 +22,17 @@ const AcademicSubjectsList = () => {
             })
             .catch((error) => {
                 console.log("Otrzymaliśmy odpowiedź o błędzie!")
+            });
+    }
+
+    const handleRemoveRecord = (row) => {
+        instance.delete("/api/academicsubjects/" + row.id)
+            .then((data) => {
+                console.log("Otrzymaliśmy sukces odpowiedź!");
+                pullRecordsFromDatabaseServer();
+            })
+            .catch((error) => {
+                console.log("Otrzymaliśmy odpowiedź o błędzie!");
             });
     }
 

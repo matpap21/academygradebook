@@ -2,11 +2,13 @@ import classes from "./StudentsList.module.css";
 import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import CardComponent from "../../CardComponent";
 import axios from "axios";
+import instance from "../../../axios/axios";
+import {Link} from "react-router-dom";
 
 const StudentsTable = (props) => {
 
     const handleRemoveRecord = (row) => {
-        axios.delete("http://localhost:8080/api/students" + row.id)
+        instance.delete("/api/students" + row.id)
             .then((data) => {
                 console.log("Otrzymaliśmy sukces odpowiedź!");
                 props.refreshData();
@@ -25,7 +27,9 @@ const StudentsTable = (props) => {
                             <TableCell>Id</TableCell>
                             <TableCell align="right">First Name</TableCell>
                             <TableCell align="right">Last Name</TableCell>
-                            <TableCell align="right"/>
+                            <TableCell align="right">Pesel</TableCell>
+                            <TableCell align="right">Phone</TableCell>
+                            <TableCell align="right">Email</TableCell>
                             <TableCell align="right"/>
                             <TableCell align="right"/>
                         </TableRow>
@@ -34,6 +38,11 @@ const StudentsTable = (props) => {
                         {props.rows.map((row) => {
                             let addButton = (<></>);
                             let removeButton = (<></>);
+                            let detailsButton = (
+                                <Link to={`/students/details/${row.id}`}>
+                                    <Button variant="outlined">Details</Button>
+                                </Link>);
+
                             if (props.onAdd) {
                                 addButton = (<TableCell align="right">
                                     <Button onClick={() => {
@@ -58,7 +67,6 @@ const StudentsTable = (props) => {
                                 <TableCell align="right">{row.pesel}</TableCell>
                                 <TableCell align="right">{row.phoneNumber}</TableCell>
                                 <TableCell align="right">{row.email}</TableCell>
-
                                 <TableCell align="right">
                                     {
                                         props.hideDelete ? (<></>) : <Button onClick={() => {
@@ -70,6 +78,10 @@ const StudentsTable = (props) => {
                                 </TableCell>
                                 {
                                     (props.isAdded !== undefined && props.isAdded(row.id)) ? removeButton : addButton
+                                }
+
+                                {
+                                    detailsButton
                                 }
 
                             </TableRow>)

@@ -3,7 +3,7 @@ import CardComponent from "../../CardComponent";
 import DeleteIcon from '@material-ui/icons/Delete';
 import {Button, Grid, MenuItem, TextField} from "@material-ui/core";
 import {useState} from "react";
-import axios from "axios";
+import instance from "../../../axios/axios";
 
 // Model / encja pustej oferty/nowego obiektu
 const EMPTY_NEW_FIELD_OF_STUDY = {
@@ -29,7 +29,7 @@ const FieldOfStudyForm = () => {
         // wysyłanie obiektu na serwer
         console.log("Wysyłamy:" + JSON.stringify(editedFieldOfStudy))
 
-        axios.post('http://localhost:8080/api/fieldsofstudy', editedFieldOfStudy)
+        instance.post('/api/fieldsofstudy', editedFieldOfStudy)
             .then((data) => {
                 console.log("Odpowiedz sukces: " + JSON.stringify(data));
             })

@@ -1,12 +1,23 @@
 import classes from "./AppHeader.module.css";
 import {Link} from 'react-router-dom';
-import GradeIcon from '@material-ui/icons/Grade';
+
 import Storage from '@material-ui/icons/Storage'
-import PeopleAlt from '@material-ui/icons/PeopleAlt'
+import AddComment from '@material-ui/icons/AddComment'
 import logo from "../../logo.svg";
+import PeopleAlt from "@material-ui/icons/PeopleAlt";
+import GradeIcon from "@material-ui/icons/Grade";
 
 const HEADER_BUTTONS = [
-
+    {
+        name: 'Logout', /* Link do formularza */
+        href: '/logout',
+        icon: (<></>),  /* Brak ikony */
+    },
+    {
+        name: 'Home',
+        href: '/',
+        icon: (<></>),  /* Brak ikony */
+    },
     {
         name: 'Field Of Study', /* Link do tablicy z listą rekordów/danych */
         href: '/fieldofstudy',
@@ -37,14 +48,10 @@ const HEADER_BUTTONS = [
         href: '/grades',
         icon: (<GradeIcon fontSize={"small"}/>),
     },
-    {
-        name: 'Home',
-        href: '/',
-        icon: (<></>),  /* Brak ikony */
-    },
+
 ]
 
-const AppHeader = () => {
+const AppHeaderLoggedIn = () => {
 
     const mapToHeaderButton = (buttonInfo) => {
         return (
@@ -70,4 +77,4 @@ const AppHeader = () => {
     );
 }
 
-export default AppHeader;
+export default AppHeaderLoggedIn;

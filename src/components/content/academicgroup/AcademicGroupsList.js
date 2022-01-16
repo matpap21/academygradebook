@@ -6,12 +6,13 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import AcademicGroupsTable from "./AcademicGroupsTable";
 import FieldOfStudyTable from "../fieldofstudy/FieldOfStudyTable";
+import instance from "../../../axios/axios";
 
 const AcademicGroupsList = () => {
     const [rows, setRows] = useState([]);
 
     const pullRecordsFromDatabaseServer = () => {
-        axios.get("http://localhost:8080/api/academicgroups")
+        instance.get("/api/academicgroups")
             .then((data) => {
                 // data ma pole data
                 console.log("Otrzymaliśmy sukces odpowiedź!")
@@ -24,7 +25,7 @@ const AcademicGroupsList = () => {
             });
     }
     const handleRemoveRecord = (row) => {
-        axios.delete("http://localhost:8080/api/academicgroups/" + row.id)
+        instance.delete("/api/academicgroups/" + row.id)
             .then((data) => {
                 console.log("Otrzymaliśmy sukces odpowiedź!");
                 pullRecordsFromDatabaseServer();

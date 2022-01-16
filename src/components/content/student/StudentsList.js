@@ -5,12 +5,15 @@ import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, T
 import {useEffect, useState} from "react";
 import axios from "axios";
 import StudentsTable from "./StudentsTable";
+import AcademicGroupsTable from "../academicgroup/AcademicGroupsTable";
+import instance from "../../../axios/axios";
+
 
 const StudentsList = () => {
     const [rows, setRows] = useState([]);
 
     const pullRecordsFromDatabaseServer = () => {
-        axios.get("http://localhost:8080/api/students")
+        instance.get("/api/students")
             .then((data) => {
                 // data ma pole data
                 console.log("Return success !")

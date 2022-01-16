@@ -1,21 +1,26 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import classes from './StudentForm.module.css'
 import CardComponent from "../../CardComponent";
 import DeleteIcon from '@material-ui/icons/Delete';
-import {Button, Grid, TextField} from "@material-ui/core";
+import {Button, Grid, MenuItem, TextField} from "@material-ui/core";
+import instance from "../../../axios/axios";
 
-const EMPTY_NEW_STUDENT =  {
+
+const EMPTY_NEW_STUDENT = {
     'id': null,
     'name': null,
     'surname': null,
-    'pesel':null,
-    'phoneNumber':null,
-    'email':null,
+    'pesel': null,
+    'phoneNumber': null,
+    'email': null,
+    'academicGroupsId': null,
 
 }
 const StudentForm = () => {
-    const [editedStudents,setEditedStudents] = useState({...EMPTY_NEW_STUDENT});
+    const [editedStudents, setEditedStudents] = useState({...EMPTY_NEW_STUDENT});
+    const [academicGroupsRecordsOnServer, setAcademicGroupsRecordsOnServer] = useState([]);
+
 
     const handleChangeForm = name => event => {
         setEditedStudents({...editedStudents, [name]: event.target.value});
@@ -26,22 +31,37 @@ const StudentForm = () => {
         setEditedStudents({...EMPTY_NEW_STUDENT})
     }
 
+    const pullAcademicGroupRecordsFromDatabaseServer = () => {
+        instance.get("/api/academicgroups")
+            .then((data) => {
+                // data ma pole data
+                setAcademicGroupsRecordsOnServer(data.data);
+
+            })
+            .catch((error) => {
+                console.log("Otrzymaliśmy odpowiedź o błędzie!")
+            });
+    }
+
+    useEffect(() => {
+        pullAcademicGroupRecordsFromDatabaseServer();
+    }, [])
+
     const handleSubmit = () => {
-        // wysłanie obiektu na serwer
+        // wysyłanie obiektu na serwer
         console.log("Wysyłamy:" + JSON.stringify(editedStudents))
 
-        axios.post('http://localhost:8080/api/students', editedStudents)
+        instance.post('/api/academicgroups/addstudent/' + editedStudents.academicGroupsId, editedStudents)
             .then((data) => {
-                console.log("Success: " + JSON.stringify(data));
+                console.log("Odpowiedz sukces: " + JSON.stringify(data));
             })
             .catch((err) => {
-                console.log("Fail: " + JSON.stringify(err));
-
+                console.log("Odpowiedz porazka: " + JSON.stringify(err));
             })
     }
 
-    return (
-        <div>
+
+    return (<div>
             <CardComponent title={'Students Form'}>
                 <Grid container className={classes.FormContainer}>
                     <Grid item xs={12}>
@@ -77,6 +97,18 @@ const StudentForm = () => {
                                    label={'Student email'} size={'small'} variant="filled"/>
                     </Grid>
 
+                    <Grid item xs={12}>
+                        <TextField value={editedStudents.academicGroupsId}
+                                   onChange={handleChangeForm("academicGroupsId")}
+                                   className={classes.FormStretchField}
+                                   select
+                                   label='Academic Groups' size={'small'} variant="filled">
+                            {academicGroupsRecordsOnServer.map((academicGroup) => {
+                                return <MenuItem key={academicGroup.id}
+                                                 value={academicGroup.id}>{academicGroup.academicGroup}</MenuItem>
+                            })}
+                        </TextField>
+                    </Grid>
 
                     <Grid item xs={1}/>
                     <Grid container item xs={10}>
@@ -99,7 +131,7 @@ const StudentForm = () => {
                 </Grid>
             </CardComponent>
         </div>
-    )
+    );
 }
 
 export default StudentForm;

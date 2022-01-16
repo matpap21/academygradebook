@@ -2,11 +2,12 @@ import classes from "./AcademicSubjectsList.module.css";
 import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import CardComponent from "../../CardComponent";
 import axios from "axios";
+import instance from "../../../axios/axios";
 
 const AcademicSubjectsTable = (props) => {
 
     const handleRemoveRecord = (row) => {
-        axios.delete("http://localhost:8080/api/academicsubjects/" + row.id)
+        instance.delete("/api/academicsubjects/" + row.id)
             .then((data) => {
                 console.log("Otrzymaliśmy sukces odpowiedź!");
                 props.refreshData();
@@ -16,6 +17,8 @@ const AcademicSubjectsTable = (props) => {
             });
     }
 
+
+
     return <CardComponent title={'Academic Subjects List'}>
         <div className={classes.TableContainer}>
             <TableContainer component={Paper}>
@@ -24,6 +27,7 @@ const AcademicSubjectsTable = (props) => {
                         <TableRow>
                             <TableCell>Id</TableCell>
                             <TableCell align="right">Subject Name</TableCell>
+                            <TableCell align="right">University Lecturers</TableCell>
                             <TableCell align="right"/>
                             <TableCell align="right"/>
                             <TableCell align="right"/>
@@ -53,6 +57,7 @@ const AcademicSubjectsTable = (props) => {
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
                                 <TableCell component="th" scope="row">{row.id}</TableCell>
                                 <TableCell align="right">{row.academicSubject}</TableCell>
+                                <TableCell align="right">{row.universityLecturer}</TableCell>
                                 <TableCell align="right">
                                     {
                                         props.hideDelete ? (<></>) : <Button onClick={() => {
