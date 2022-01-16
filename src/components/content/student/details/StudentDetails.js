@@ -5,6 +5,7 @@ import {Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableH
 import {useEffect, useState} from "react";
 import StudentsTable from "../StudentsTable";
 import instance from "../../../../axios/axios";
+import AcademicGroupsAddStudentsTable from "./AcademicGroupsAddStudentsTable";
 
 const StudentDetails = () => {
     const {studentId} = useParams();
@@ -80,6 +81,7 @@ const StudentDetails = () => {
                 </Link>
             </div>
             {/*<StudentsTable rows={student.students} hideDelete={true} refreshData={pullRecords}/>*/}
+            <AcademicGroupsAddStudentsTable rows={student.academicGroup} hideDelete={true} studentId = {studentId}/>
         </div>
     )
 }

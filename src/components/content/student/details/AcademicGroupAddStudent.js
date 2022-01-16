@@ -69,7 +69,7 @@ const AcademicGroupAddStudent = () => {
         // wysyłanie obiektu na serwer
         console.log("Wysyłamy:" + JSON.stringify(editedAcademicGroup))
 
-        instance.post('/api/academicgroups/addstudent/'+ editedAcademicGroup., editedAcademicGroup)
+        instance.post('/api/academicgroups/addstudent/'+ editedAcademicGroup.academicGroupsId + `/` + studentId)
             .then((data) => {
                 console.log("Odpowiedz sukces: " + JSON.stringify(data));
             })
