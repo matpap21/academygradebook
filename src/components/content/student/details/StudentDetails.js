@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import StudentsTable from "../StudentsTable";
 import instance from "../../../../axios/axios";
 import AcademicGroupsAddStudentsTable from "./AcademicGroupsAddStudentsTable";
+import GradesAddStudentsTable from "./GradesAddStudentsTable";
 
 const StudentDetails = () => {
     const {studentId} = useParams();
@@ -82,7 +83,9 @@ const StudentDetails = () => {
             </div>
             {/*<StudentsTable rows={student.students} hideDelete={true} refreshData={pullRecords}/>*/}
             <AcademicGroupsAddStudentsTable rows={student.academicGroup} hideDelete={true} studentId = {studentId}/>
+            <GradesAddStudentsTable rows={student.grades} hideDelete={true} studentId = {studentId}/>
         </div>
+
     )
 }
 export default StudentDetails;
