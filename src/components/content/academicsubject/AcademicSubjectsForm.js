@@ -45,7 +45,7 @@ const handleSubmit = () => {
     // wysyłanie obiektu na serwer
     console.log("Wysyłamy:" + JSON.stringify(editedAcademicSubject))
 
-    instance.post('/api/universitylecturers/addacademicsubjects' + editedAcademicSubject.universityLecturerId)
+    instance.post('/api/academicsubjects' ,editedAcademicSubject)
         .then((data) => {
             console.log("Odpowiedz sukces: " + JSON.stringify(data));
         })

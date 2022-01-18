@@ -75,7 +75,7 @@ const ContentLoggedIn = () => {
                         <StudentsList/>
                     </Route>
 
-                    <Route path={'/grade/add'}>
+                    <Route path={'/grades/add/:studentId'}>
                         <GradesForm/>
                     </Route>
                     <Route path={'/grades'}>

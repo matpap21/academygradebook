@@ -78,7 +78,12 @@ const StudentDetails = () => {
             </CardComponent>
             <div className={classes.AddButtonContainer}>
                 <Link to={`/students/addGroup/${student.id}`} className={classes.TrainingsAddButton}>
-                    <Button variant="outlined">Manage Students</Button>
+                    <Button variant="outlined">Add to Group</Button>
+                </Link>
+            </div>
+            <div className={classes.AddButtonContainer}>
+                <Link to={`/grades/add/${student.id}`} className={classes.TrainingsAddButton}>
+                    <Button variant="outlined">Add Grade</Button>
                 </Link>
             </div>
             {/*<StudentsTable rows={student.students} hideDelete={true} refreshData={pullRecords}/>*/}

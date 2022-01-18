@@ -22,7 +22,7 @@ const GradesAddStudentsTable = (props) => {
     }
 
     const pullGrades = () => {
-        instance.get(`/api/academicgroups/bystudent/${props.studentId}`)
+        instance.get(`/api/grades/bystudent/${props.studentId}`)
             .then((data) => {
                 // data ma pole data
                 console.log("Otrzymaliśmy sukces odpowiedź!")
@@ -34,6 +34,7 @@ const GradesAddStudentsTable = (props) => {
                 console.log("Otrzymaliśmy odpowiedź o błędzie!")
             });
     }
+
     useEffect(() => {
         pullGrades();
     }, [])
@@ -46,7 +47,7 @@ const GradesAddStudentsTable = (props) => {
                         <TableRow>
                             <TableCell>Id</TableCell>
                             <TableCell align="right">Grades</TableCell>
-                            <TableCell align="right"/>
+                            <TableCell align="right">Subject Name</TableCell>
                             <TableCell align="right"/>
                         </TableRow>
                     </TableHead>
@@ -79,6 +80,7 @@ const GradesAddStudentsTable = (props) => {
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
                                 <TableCell component="th" scope="row">{row.id}</TableCell>
                                 <TableCell align="right">{row.grades}</TableCell>
+                                <TableCell align="right">{row.academicSubject}</TableCell>
                                 <TableCell align="right">
                                     {
                                         props.hideDelete ? (<></>) : <Button onClick={() => {
