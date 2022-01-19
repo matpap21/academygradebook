@@ -27,7 +27,6 @@ const AcademicSubjectsTable = (props) => {
                         <TableRow>
                             <TableCell>Id</TableCell>
                             <TableCell align="right">Subject Name</TableCell>
-                            <TableCell align="right">University Lecturers</TableCell>
                             <TableCell align="right"/>
                             <TableCell align="right"/>
                             <TableCell align="right"/>
@@ -57,7 +56,7 @@ const AcademicSubjectsTable = (props) => {
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
                                 <TableCell component="th" scope="row">{row.id}</TableCell>
                                 <TableCell align="right">{row.academicSubject}</TableCell>
-                                <TableCell align="right">{row.universityLecturer}</TableCell>
+                                {/*<TableCell align="right">{row.universityLecturer}</TableCell>*/}
                                 <TableCell align="right">
                                     {
                                         props.hideDelete ? (<></>) : <Button onClick={() => {

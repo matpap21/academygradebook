@@ -27,6 +27,7 @@ const UniversityLecturersTable = (props) => {
                             <TableCell>Id</TableCell>
                             <TableCell align="right">First Name</TableCell>
                             <TableCell align="right">Last Name</TableCell>
+                            <TableCell align="right">Pesel</TableCell>
                             <TableCell align="right">Lecturer Degree</TableCell>
                             <TableCell align="right"/>
                             <TableCell align="right"/>
@@ -58,9 +59,7 @@ const UniversityLecturersTable = (props) => {
                                 <TableCell align="right">{row.name}</TableCell>
                                 <TableCell align="right">{row.surname}</TableCell>
                                 <TableCell align="right">{row.pesel}</TableCell>
-                                <TableCell align="right">{row.phoneNumber}</TableCell>
-                                <TableCell align="right">{row.email}</TableCell>
-
+                                <TableCell align="right">{row.universityLecturerDegreesEnum}</TableCell>
                                 <TableCell align="right">
                                     {
                                         props.hideDelete ? (<></>) : <Button onClick={() => {

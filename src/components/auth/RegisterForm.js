@@ -1,4 +1,4 @@
-import classes from '../AppContentForm.module.css';
+import classes from '../content/fieldofstudy/FieldOfStudyForm.module.css'
 import DeleteIcon from '@material-ui/icons/Delete';
 import {Button, Grid, MenuItem, Select, TextField} from "@material-ui/core";
 import {useState} from "react";
@@ -9,7 +9,8 @@ import {useHistory} from "react-router-dom";
 const EMPTY_NEW_USER = {
     'username': '',
     'password': '',
-    'admin': false
+    'role': '',
+
 }
 
 const RegisterForm = () => {
@@ -29,7 +30,7 @@ const RegisterForm = () => {
         // wysłanie obiektu na serwer
         console.log("Wysyłamy:" + JSON.stringify(registeredUser))
 
-        instance.post('/user/register', registeredUser)
+        instance.post('/api/user/register', registeredUser)
             .then((data)=>{
                 console.log("Odpowiedź sukces: "+ JSON.stringify(data));
 
@@ -58,13 +59,15 @@ const RegisterForm = () => {
                                    label={'Password'} size={'small'} variant="filled"/>
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField value={registeredUser.admin}
-                                   onChange={handleChangeForm("admin")}
+                        <TextField value={registeredUser.role}
+                                   onChange={handleChangeForm("role")}
                                    className={classes.FormStretchField}
                                    select
-                                   label='Car Body/Type' size={'small'} variant="filled">
-                            <MenuItem value={true}>Administrator</MenuItem>
-                            <MenuItem value={false}>Basic User</MenuItem>
+                                   label='Type of user' size={'small'} variant="filled">
+                            <MenuItem value={"ROLE_ADMIN"}>Administrator</MenuItem>
+                            <MenuItem value={"ROLE_LECTURER"}>Lecturer</MenuItem>
+                            <MenuItem value={"ROLE_USER"}>Basic User</MenuItem>
+
                         </TextField>
                     </Grid>
                     <Grid item xs={1}/>

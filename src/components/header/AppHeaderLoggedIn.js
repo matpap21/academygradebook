@@ -6,11 +6,17 @@ import AddComment from '@material-ui/icons/AddComment'
 import logo from "../../logo.svg";
 import PeopleAlt from "@material-ui/icons/PeopleAlt";
 import GradeIcon from "@material-ui/icons/Grade";
+import {connect} from "react-redux";
 
 const HEADER_BUTTONS = [
     {
         name: 'Logout', /* Link do formularza */
         href: '/logout',
+        icon: (<></>),  /* Brak ikony */
+    },
+    {
+        name: 'Register',
+        href: '/register',
         icon: (<></>),  /* Brak ikony */
     },
     {
@@ -51,7 +57,7 @@ const HEADER_BUTTONS = [
 
 ]
 
-const AppHeaderLoggedIn = () => {
+const AppHeaderLoggedIn = (props) => {
 
     const mapToHeaderButton = (buttonInfo) => {
         return (
@@ -72,9 +78,19 @@ const AppHeaderLoggedIn = () => {
                 {
                     HEADER_BUTTONS.map(mapToHeaderButton)
                 }
+                <div className={classes.UsernameHeaderDiv}>
+                    Logged in as: {props.authenticatedUsername} [{props.authenticatedUserId}] [{props.authenticatedUserAdmin?'A':'U'}]                </div>
             </div>
         </header>
     );
 }
+const mapStateToProps = state => {
+        return {
+            authenticatedUsername: state.auth.username,
+            authenticatedUserAdmin: state.auth.admin,
+            authenticatedUserId: state.auth.id
+        };
+    }
+;
 
-export default AppHeaderLoggedIn;
+export default connect(mapStateToProps, null)(AppHeaderLoggedIn);

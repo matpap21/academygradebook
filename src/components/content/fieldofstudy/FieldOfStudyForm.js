@@ -73,7 +73,6 @@ const FieldOfStudyForm = () => {
                         </TextField>
                     </Grid>
 
-
                     <Grid item xs={1}/>
                     <Grid container item xs={10}>
                         <Grid item xs={6}>

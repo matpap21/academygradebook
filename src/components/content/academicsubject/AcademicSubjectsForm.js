@@ -64,17 +64,7 @@ return (
                                className={classes.FormStretchField}
                                label={'Academic Subject name'} size={'small'} variant="filled"/>
                 </Grid>
-                <Grid item xs={12}>
-                    <TextField value={editedAcademicSubject.universityLecturerId}
-                               onChange={handleChangeForm("universityLecturerId")}
-                               className={classes.FormStretchField}
-                               select
-                               label='University Lecturers' size={'small'} variant="filled">
-                        {academicLecturersRecordsOnServer.map((universityLecturer) => {
-                            return (<MenuItem key={universityLecturer.id} value={universityLecturer.id}>{universityLecturer.universityLecturerDegreesEnum}</MenuItem>)
-                        })}
-                    </TextField>
-                </Grid>
+
 
                 <Grid item xs={1}/>
                 <Grid container item xs={10}>

@@ -23,7 +23,7 @@ export const auth = (username, password) => {
                 localStorage.setItem('username', username);
 
 
-                instance.get("/user")
+                instance.get("/api/user")
                     .then(response => {
                        console.log('Retrieving rest of user data successful...')
                         localStorage.setItem('id', response.data.id);
