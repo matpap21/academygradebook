@@ -12,6 +12,8 @@ const initialState = {
     username: null,
     id: null,
     admin:null,
+    lecturer:null,
+    student:null,
     error: null,
     loading: false,
     authRedirectPath: '/auth'
@@ -39,6 +41,8 @@ const authSuccess = (state, action) => {
         username: action.username,
         id: action.id,
         admin:action.admin,
+        lecturer:action.lecturer,
+        student:action.student,
         error: null,
         loading: false
     });

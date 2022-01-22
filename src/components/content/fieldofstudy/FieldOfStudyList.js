@@ -6,8 +6,9 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import FieldOfStudyTable from "./FieldOfStudyTable";
 import instance from "../../../axios/axios";
+import {connect} from "react-redux";
 
-const FieldOfStudyList = () => {
+const FieldOfStudyList = (props) => {
     const [rows, setRows] = useState([]);
 
     const pullRecordsFromDatabaseServer = () => {
@@ -30,13 +31,26 @@ const FieldOfStudyList = () => {
 
     return (
         <div>
-            <div className={classes.AddButtonContainer}>
-                <Link to={"/fieldofstudy/add"} className={classes.FieldOfStudyAddButton}>
-                    <Button variant="outlined">Add New</Button>
-                </Link>
-            </div>
+            {
+                (props.authenticatedUserStudent ? <></> : (
+                    <div className={classes.AddButtonContainer}>
+                        <Link to={"/fieldofstudy/add"} className={classes.FieldOfStudyAddButton}>
+                            <Button variant="outlined">Add New</Button>
+                        </Link>
+                    </div>))
+            }
             <FieldOfStudyTable rows={rows} refreshData={pullRecordsFromDatabaseServer}/>
         </div>
     )
 }
-export default FieldOfStudyList;
+
+const mapStateToProps = state => {
+        return {
+            authenticatedUsername: state.auth.username,
+            authenticatedUserStudent: state.auth.student,
+            authenticatedUserId: state.auth.id
+        };
+    }
+;
+
+export default connect(mapStateToProps, null)(FieldOfStudyList);

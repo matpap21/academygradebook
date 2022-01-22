@@ -20,20 +20,20 @@ import GradesList from "../content/grades/GradesList";
 import AcademicGroupAddAttendee from "../content/student/details/AcademicGroupAddStudent";
 import StudentDetails from "../content/student/details/StudentDetails";
 import AcademicGroupAddStudent from "../content/student/details/AcademicGroupAddStudent";
+import {connect} from "react-redux";
 
 
-const ContentLoggedIn = () => {
+const ContentLoggedIn = (props) => {
     return (
         <>
             <AppHeaderLoggedIn/>
             <div className={classes.AppContent}>
                 <Switch>
-
+                    <Route path={'/fieldofstudy/add'}>
+                        <FieldOfStudyForm/>
+                    </Route>
                     <Route path={'/academicgroups/add/student/:studentId'}>
                         <AcademicGroupAddAttendee/>
-                    </Route>
-                    <Route path={'/students/details/:studentId'}>
-                        <StudentDetails/>
                     </Route>
 
                     <Route path={'/students/addGroup/:studentId'}>
@@ -42,16 +42,6 @@ const ContentLoggedIn = () => {
 
                     <Route path={'/group/add'}>
                         <AcademicGroupsForm/>
-                    </Route>
-                    <Route path={'/groups'}>
-                        <AcademicGroupsList/>
-                    </Route>
-
-                    <Route path={'/fieldofstudy/add'}>
-                        <FieldOfStudyForm/>
-                    </Route>
-                    <Route path={'/fieldofstudy'}>
-                        <FieldOfStudyList/>
                     </Route>
 
                     <Route path={'/lecturer/add'}>
@@ -71,15 +61,26 @@ const ContentLoggedIn = () => {
                     <Route path={'/student/add'}>
                         <StudentForm/>
                     </Route>
-                    <Route path={'/students'}>
-                        <StudentsList/>
-                    </Route>
 
                     <Route path={'/grades/add/:studentId'}>
                         <GradesForm/>
                     </Route>
                     <Route path={'/grades'}>
                         <GradesList/>
+                    </Route>
+
+                    <Route path={'/students/details/:studentId'}>
+                        <StudentDetails/>
+                    </Route>
+                    <Route path={'/students'}>
+                        <StudentsList/>
+                    </Route>
+
+                    <Route path={'/fieldofstudy'}>
+                        <FieldOfStudyList/>
+                    </Route>
+                    <Route path={'/groups'}>
+                        <AcademicGroupsList/>
                     </Route>
 
                     <Route path={'/logout'}>
@@ -95,4 +96,15 @@ const ContentLoggedIn = () => {
     )
 }
 
-export default ContentLoggedIn;
+const mapStateToProps = state => {
+        return {
+            authenticatedUsername: state.auth.username,
+            authenticatedUserAdmin: state.auth.admin,
+            authenticatedUserLecturer: state.auth.lecturer,
+            authenticatedUserStudent: state.auth.student,
+            authenticatedUserId: state.auth.id
+        };
+    }
+;
+
+export default connect(mapStateToProps, null)(ContentLoggedIn);

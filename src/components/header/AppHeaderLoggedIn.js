@@ -13,59 +13,114 @@ const HEADER_BUTTONS = [
         name: 'Logout', /* Link do formularza */
         href: '/logout',
         icon: (<></>),  /* Brak ikony */
+        admin: true,
+        lecturer: true,
+        student: true,
     },
     {
         name: 'Register',
         href: '/register',
         icon: (<></>),  /* Brak ikony */
+        admin: true,
+        lecturer: true,
+        student: true,
     },
     {
         name: 'Home',
         href: '/',
         icon: (<></>),  /* Brak ikony */
+        admin: true,
+        lecturer: true,
+        student: true,
     },
     {
         name: 'Field Of Study', /* Link do tablicy z listą rekordów/danych */
         href: '/fieldofstudy',
         icon: (<Storage fontSize={"small"}/>),
+        admin: true,
+        lecturer: true,
+        student: false,
     },
     {
         name: 'Academic Group', /* Link do tablicy z listą rekordów/danych */
         href: '/groups',
         icon: (<Storage fontSize={"small"}/>),
+        admin: true,
+        lecturer: true,
+        student: false,
     },
     {
         name: 'Subjects', /* Link do tablicy z listą rekordów/danych */
         href: '/subjects',
         icon: (<Storage fontSize={"small"}/>),
+        admin: true,
+        lecturer: true,
+        student: false,
     },
     {
         name: 'University Lecturers',
         href: '/lecturers',
         icon: (<PeopleAlt fontSize={"small"}/>),
+        admin: true,
+        lecturer: true,
+        student: false,
     },
     {
         name: 'Students',
         href: '/students',
         icon: (<PeopleAlt fontSize={"small"}/>),
+        admin: true,
+        lecturer: true,
+        student: false,
     },
     {
-        name: 'Grades', /* Link do tablicy z listą rekordów/danych */
+        name: 'All Grades of All Students', /* Link do tablicy z listą rekordów/danych */
         href: '/grades',
         icon: (<GradeIcon fontSize={"small"}/>),
+        admin: true,
+        lecturer: true,
+        student: false,
+    },
+    {
+    name: 'My grades', /* Link do tablicy z listą rekordów/danych */
+    href: '/grades',
+    icon: (<GradeIcon fontSize={"small"}/>),
+    admin: true,
+    lecturer: true,
+    student: true,
+},
+    {
+        name: 'My profile', /* Link do tablicy z listą rekordów/danych */
+        href: '/students/details/:userId',
+        icon: (<GradeIcon fontSize={"small"}/>),
+        admin: false,
+        lecturer: false,
+        student: true,
     },
 
 ]
 
 const AppHeaderLoggedIn = (props) => {
 
-    const mapToHeaderButton = (buttonInfo) => {
+    const mapToHeaderButton = (buttonInfo, admin, lecturer, student,userID) => {
+        let hrefLink = buttonInfo.href.replace(':userId','' + userID)
+        let content = <Link key={buttonInfo.name} to={hrefLink} className={classes.HeaderMenuButton}>
+            {buttonInfo.icon}
+            <div>{buttonInfo.name}</div>
+        </Link>;
+
+        console.log(admin)
+        console.log(lecturer)
+        console.log(student)
+        console.log(buttonInfo)
+
+        if((!buttonInfo.admin && admin) || (!buttonInfo.lecturer && lecturer)|| (!buttonInfo.student && student)){
+            content = <></>;
+        }
+
         return (
             /* Link zostanie zastąpiony/zaprezentowany w postaci <a> */
-            <Link key={buttonInfo.name} to={buttonInfo.href} className={classes.HeaderMenuButton}>
-                {buttonInfo.icon}
-                <div>{buttonInfo.name}</div>
-            </Link>
+            content
         )
     }
 
@@ -76,10 +131,14 @@ const AppHeaderLoggedIn = (props) => {
             </div>
             <div className={classes.HeaderRight}>
                 {
-                    HEADER_BUTTONS.map(mapToHeaderButton)
+                    HEADER_BUTTONS.map((button) => {
+                        return mapToHeaderButton(button, props.authenticatedUserAdmin, props.authenticatedUserLecturer, props.authenticatedUserStudent, props.authenticatedUserId);
+                    })
                 }
                 <div className={classes.UsernameHeaderDiv}>
-                    Logged in as: {props.authenticatedUsername} [{props.authenticatedUserId}] [{props.authenticatedUserAdmin?'A':'U'}]                </div>
+                    Logged in as: {props.authenticatedUsername} [{props.authenticatedUserId}]
+                    [{props.authenticatedUserAdmin ? 'A' : 'U'}]
+                </div>
             </div>
         </header>
     );
@@ -88,6 +147,8 @@ const mapStateToProps = state => {
         return {
             authenticatedUsername: state.auth.username,
             authenticatedUserAdmin: state.auth.admin,
+            authenticatedUserLecturer: state.auth.lecturer,
+            authenticatedUserStudent: state.auth.student,
             authenticatedUserId: state.auth.id
         };
     }

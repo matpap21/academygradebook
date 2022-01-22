@@ -13,7 +13,7 @@ const StudentDetails = () => {
     const [student, setStudent] = useState({});
 
     const pullRecords = () => {
-        instance.get(`/api/students/${studentId}`)
+        instance.get(`/api/grades/${studentId}`)
             .then((data) => {
                 // data ma pole data
                 setStudent(data.data);
@@ -29,7 +29,7 @@ const StudentDetails = () => {
 
     return (
         <div>
-            <CardComponent title={'Student Details'}>
+            <CardComponent title={'My grades'}>
                 <Grid container className={classes.DetailsContainer}>
                     <Grid item xs={3}>
                         Name:
@@ -73,30 +73,23 @@ const StudentDetails = () => {
                         {student.academicGroupsId}
                     </Grid>
 
+                    <Grid item xs={3}>
+                        Academic Group
+                    </Grid>
+                    <Grid item xs={9}>
+                        {student.grades}
+                    </Grid>
+
 
                 </Grid>
             </CardComponent>
-            <div className={classes.AddButtonContainer}>
-                <Link to={`/students/addGroup/${student.id}`} className={classes.TrainingsAddButton}>
-                    <Button variant="outlined">Add to Group</Button>
-                </Link>
-            </div>
-            <div className={classes.AddButtonContainer}>
-                <Link to={`/grades/add/${student.id}`} className={classes.TrainingsAddButton}>
-                    <Button variant="outlined">Add Grade</Button>
+            <div className={classes.TableContainer}>
+                <Link to={`/grades/${student.id}`} className={classes.TrainingsAddButton}>
+                    <Button variant="outlined">My grades</Button>
                 </Link>
             </div>
 
-
-            {/*<StudentsTable rows={student.students} hideDelete={true} refreshData={pullRecords}/>*/}
-            <AcademicGroupsAddStudentsTable rows={student.academicGroup} hideDelete={true} studentId = {studentId}/>
-            <GradesAddStudentsTable rows={student.grades} hideDelete={true} studentId = {studentId}/>
         </div>
-
-
-
-
-
 
     )
 }

@@ -29,14 +29,21 @@ export const auth = (username, password) => {
                         localStorage.setItem('id', response.data.id);
                        localStorage.setItem('username', response.data.username);
                        localStorage.setItem('admin', response.data.admin);
-                     //  localStorage.setItem('lecturer', response.data.lecturer);
-                     //  localStorage.setItem('admin', response.data.universityLecturerId);
-                        dispatch(authSuccess(response.headers.authorization, username, response.data.id, response.data.admin));
+                       localStorage.setItem('lecturer', response.data.lecturer);
+                       localStorage.setItem('student', (!response.data.lecturer && !response.data.admin));
+
+                        dispatch(authSuccess(response.headers.authorization,
+                            username,
+                            response.data.id,
+                            response.data.admin,
+                            response.data.lecturer,
+                            (!response.data.lecturer && !response.data.admin),
+                        ));
                     })
                     .catch(err => {
                         console.log('Retrieving rest of user data ERROR!')
                     })
-                dispatch(authSuccess(response.headers.authorization, username, null,null))
+                dispatch(authSuccess(response.headers.authorization, username, null,null, null, null))
 
             })
             .catch(err => {
@@ -48,13 +55,15 @@ export const auth = (username, password) => {
     }
 }
 
-const authSuccess = (token, username, id, admin) => {
+const authSuccess = (token, username, id, admin, lecturer, student) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         token: token,
         username: username,
         id: id,
         admin:admin,
+        lecturer:lecturer,
+        student:student,
     }
 }
 
@@ -70,6 +79,8 @@ export const logout = () => {
     localStorage.removeItem('username');
     localStorage.removeItem('id');
     localStorage.removeItem('admin');
+    localStorage.removeItem('lecturer');
+    localStorage.removeItem('student');
     return {
         type: actionTypes.AUTH_LOGOUT
     }
